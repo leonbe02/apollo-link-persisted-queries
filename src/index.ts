@@ -1,5 +1,5 @@
 import { ApolloLink, Observable, Operation } from 'apollo-link';
-import { sha256 } from 'hash.js';
+import { sha256 } from 'sha.js';
 import { print } from 'graphql/language/printer';
 import {
   DefinitionNode,
@@ -26,9 +26,7 @@ namespace PersistedQueryLink {
 }
 
 export const defaultGenerateHash = (query: DocumentNode): string =>
-  sha256()
-    .update(print(query))
-    .digest('hex');
+  new sha256().update(print(query)).digest('hex');
 
 export const defaultOptions = {
   generateHash: defaultGenerateHash,
